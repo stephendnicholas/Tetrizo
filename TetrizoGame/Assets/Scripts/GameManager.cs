@@ -40,4 +40,14 @@ public class GameManager : MonoBehaviour {
         currentScore = 0;
         SceneManager.LoadScene("level");
     }
+
+
+    public void LinesCleared(int numberOfLines) {
+        currentScore += numberOfLines;
+        Debug.Log("Current score: " + numberOfLines);
+
+        if(currentScore > highScore) {
+            highScore = currentScore;
+        }
+    }
 }
