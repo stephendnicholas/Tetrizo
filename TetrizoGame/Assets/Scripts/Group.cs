@@ -11,7 +11,8 @@ public class Group : MonoBehaviour {
     private PlayAreaManager playAreaManager;
     private Spawner spawner;
 
-    private bool relativeControls = false;
+    private bool relativeControls = false; // TODO - will be passed in after chosen on home screen
+    private bool rotationEnabled = true; //TODO - use this
 
     // 0 = original, 1 = 1 rotation, 2 = two rotations, 3 = 3 rotations. Should loop back to 0 after this point
     private int orientation = 0;
@@ -36,10 +37,10 @@ public class Group : MonoBehaviour {
 
         playAreaManager = (PlayAreaManager) FindObjectOfType<PlayAreaManager>();
 
+        // If not valid when spawned, then Game Over
         if(!playAreaManager.isValidGridPos(this)) {
-            debug("Game over");
             Destroy(gameObject);
-            print("test2");
+            playAreaManager.GameOver();
         }
         
     }
@@ -241,7 +242,7 @@ public class Group : MonoBehaviour {
         transform.Rotate(0, 0, -90);
 
         if (playAreaManager.isValidGridPos(this)) {
-            //Camera.main.transform.Rotate(0, 0, -90);
+            Camera.main.transform.Rotate(0, 0, -90);
         }
         else {
             transform.Rotate(0, 0, 90);

@@ -33,21 +33,44 @@ public class GameManager : MonoBehaviour {
      * Actual Game related stuff:
      ********************************************************************************/
 
-    private int currentScore = 0;
-    private int highScore = 0;
+    public enum Difficulty {
+        EASY,
+        HARD
+    }
 
-    public void NewGame() {
+
+    private Difficulty currentDifficulty = Difficulty.EASY;
+
+    private int currentScore = 0;
+
+    private List<int> highScores = new List<int>();
+
+    public void NewGame(Difficulty difficulty) {
         currentScore = 0;
+        currentDifficulty = difficulty;
         SceneManager.LoadScene("level");
+    }
+
+
+    public Difficulty getCurrentDifficulty() {
+        return currentDifficulty;
     }
 
 
     public void LinesCleared(int numberOfLines) {
         currentScore += numberOfLines;
         Debug.Log("Current score: " + numberOfLines);
+    }
 
-        if(currentScore > highScore) {
-            highScore = currentScore;
-        }
+
+    public void GameOver() {
+        highScores.Add(currentScore);
+        highScores.Sort();
+        SceneManager.LoadScene("game_over");
+    }
+
+
+    public List<int> getHighScores() {
+        return highScores;
     }
 }

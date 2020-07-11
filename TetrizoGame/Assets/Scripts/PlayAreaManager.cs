@@ -133,4 +133,9 @@ public class PlayAreaManager : MonoBehaviour {
             Debug.Log(msg);
         }
     }
+
+
+    public void GameOver() {
+        GameManager.Instance.GameOver();
+    }
 }
