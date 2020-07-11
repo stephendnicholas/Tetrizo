@@ -18,8 +18,9 @@ public class Group : MonoBehaviour {
     // 0 = original, 1 = 1 rotation, 2 = two rotations, 3 = 3 rotations. Should loop back to 0 after this point
     private int orientation = 0;
 
+    private static float intitialPerFallInternal = 0.8f;
+    private float currentPerFallInterval = intitialPerFallInternal;
     private float lastFallTime = 0.0f;
-    private float perFallInterval = 0.8f;
 
     // For debug
     private bool debugEnabled;
@@ -54,6 +55,9 @@ public class Group : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
+        // Re-calculate currentPerFallInterval in case the level has increased TODO - confirm the calculation to use
+        currentPerFallInterval = intitialPerFallInternal - (GameManager.Instance.getCurrentLevel() * 0.05f);
 
         Direction directionToMove = Direction.NONE;
 
@@ -167,7 +171,7 @@ public class Group : MonoBehaviour {
 
         Move(directionToMove);
 
-        if (Time.time - lastFallTime > perFallInterval) {
+        if (Time.time - lastFallTime > currentPerFallInterval) {
             Move(Direction.DOWN);
             lastFallTime = Time.time;
         }

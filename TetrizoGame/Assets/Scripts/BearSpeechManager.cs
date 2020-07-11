@@ -16,6 +16,7 @@ public class BearSpeechManager : MonoBehaviour
         "In Soviet Russia, car drives you!",
         "Come. Soon we will rest. With nice glass of Leninade",
         "Ain't no party like Communist party",
+        "The Puns. They are Unbearable"
     };
 
     void Start() {

@@ -281,7 +281,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: In russia, game moves you
+  m_Text: In Russia, game moves you
 --- !u!222 &407681678
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1779,7 +1779,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Tetrizo
+  m_Text: TETRIZO
 --- !u!222 &1616666227
 CanvasRenderer:
   m_ObjectHideFlags: 0

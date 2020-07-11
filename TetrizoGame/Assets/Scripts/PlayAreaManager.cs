@@ -11,7 +11,7 @@ public class PlayAreaManager : MonoBehaviour {
     private Spawner spawner;
 
     private Transform[,] grid = new Transform[width, height];
-    private bool debugEnabled = true;
+    private bool debugEnabled = false;
 
     private void Start() {
         spawner = (Spawner)FindObjectOfType<Spawner>();
@@ -76,10 +76,7 @@ public class PlayAreaManager : MonoBehaviour {
             }
         }
 
-        //TODO score
         if (fullLineCount != 0) { 
-            debug("Score +=" + fullLineCount);
-
             GameManager.Instance.LinesCleared(fullLineCount);
         }
     }
