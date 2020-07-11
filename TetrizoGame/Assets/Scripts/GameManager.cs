@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -20,8 +22,7 @@ public class GameManager : MonoBehaviour {
         if(instance == null) {
             instance = this;
             Debug.Log("GameManager Singleton instantiated");
-
-            SceneManager.LoadScene("home");
+            MainMenu();
         }
         else if(instance != this) {
             Debug.LogError("Attempted to create a second instance of GameManager");
@@ -45,9 +46,15 @@ public class GameManager : MonoBehaviour {
 
     private List<int> highScores = new List<int>();
 
+
+    public void MainMenu() {
+        SceneManager.LoadScene("home");
+    }
+
     public void NewGame(Difficulty difficulty) {
         currentScore = 0;
         currentDifficulty = difficulty;
+
         SceneManager.LoadScene("level");
     }
 
@@ -57,9 +64,36 @@ public class GameManager : MonoBehaviour {
     }
 
 
+    public bool isMusicPlaying() {
+        AudioSource music = GetComponent<AudioSource>();
+
+        return music.isPlaying;
+    }
+
+
+    /**
+     * Toggle music and return whether it is now playing or not
+     */
+    public bool toggleMusic() {
+        AudioSource music = GetComponent<AudioSource>();
+
+        if(music.isPlaying) {
+            music.Pause();
+            return false;
+        }
+        else {
+            music.UnPause();
+            return true;
+        }
+    }
+
+
     public void LinesCleared(int numberOfLines) {
-        currentScore += numberOfLines;
+        currentScore += (numberOfLines * 1000);
         Debug.Log("Current score: " + numberOfLines);
+
+        Text levelScoreValue = GameObject.FindGameObjectWithTag("levelScore").GetComponent<Text>();
+        levelScoreValue.GetComponent<Text>().text = "" + currentScore;
     }
 
 
@@ -72,5 +106,10 @@ public class GameManager : MonoBehaviour {
 
     public List<int> getHighScores() {
         return highScores;
+    }
+
+
+    public int getCurrentScore() {
+        return currentScore;
     }
 }

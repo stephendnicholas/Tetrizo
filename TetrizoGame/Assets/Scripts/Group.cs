@@ -11,15 +11,19 @@ public class Group : MonoBehaviour {
     private PlayAreaManager playAreaManager;
     private Spawner spawner;
 
-    private bool relativeControls = false; // TODO - will be passed in after chosen on home screen
-    private bool rotationEnabled = true; //TODO - use this
+    // Based on selected difficulty
+    private bool relativeControls = false;
+    
 
     // 0 = original, 1 = 1 rotation, 2 = two rotations, 3 = 3 rotations. Should loop back to 0 after this point
     private int orientation = 0;
 
     private float lastFallTime = 0.0f;
     private float perFallInterval = 0.8f;
+
+    // For debug
     private bool debugEnabled;
+    private bool rotationEnabled = true; //TODO - use this
 
     enum Direction {
         NONE,
@@ -31,6 +35,9 @@ public class Group : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        relativeControls = GameManager.Instance.getCurrentDifficulty() == GameManager.Difficulty.HARD;
+
+
         //Reset camera to same position and orientation as this block
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
         Camera.main.transform.rotation = Quaternion.identity;
@@ -239,10 +246,13 @@ public class Group : MonoBehaviour {
         //TODO
         //transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
 
+        
         transform.Rotate(0, 0, -90);
 
         if (playAreaManager.isValidGridPos(this)) {
-            Camera.main.transform.Rotate(0, 0, -90);
+            if (rotationEnabled) { 
+                Camera.main.transform.Rotate(0, 0, -90);
+            }
         }
         else {
             transform.Rotate(0, 0, 90);
