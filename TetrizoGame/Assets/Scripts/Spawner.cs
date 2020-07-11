@@ -1,15 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
     // Set in the unity editor
+    public Sprite[] groupSprites;
+
+    // Set in the unity editor
     public GameObject[] groups;
 
-    private float spawnDelay = 1.0f;
+    // Set in the unity editor
+    public GameObject nextImage;
+
+    private float spawnDelay = 0.5f;
+
+    private int nextBlock;
 
     void Start() {
+        nextBlock = Random.Range(0, groups.Length);
         SpawnNext();
     }
 
@@ -21,11 +31,14 @@ public class Spawner : MonoBehaviour
     IEnumerator spawn() {
         yield return new WaitForSeconds(spawnDelay);
 
-        int i = Random.Range(0, groups.Length);
-
         // Spawn Group at current Position
-        Instantiate(groups[i],
+        Instantiate(groups[nextBlock],
                     transform.position,
                     Quaternion.identity);
+
+        nextBlock = Random.Range(0, groups.Length);
+
+        nextImage.SetActive(true);
+        nextImage.GetComponent<Image>().sprite = groupSprites[nextBlock];
     }
 }

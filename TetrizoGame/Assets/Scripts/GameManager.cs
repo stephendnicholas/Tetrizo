@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -22,6 +23,20 @@ public class GameManager : MonoBehaviour {
         if(instance == null) {
             instance = this;
             Debug.Log("GameManager Singleton instantiated");
+
+            // Load from player prefs whether to play the music from the get go
+            if (PlayerPrefs.HasKey(musicPreferencesKey)) {
+                playMusicOnAwake = PlayerPrefs.GetInt(musicPreferencesKey) == 1;
+            }
+            else {
+                playMusicOnAwake = true;
+            }
+
+            if(playMusicOnAwake) {
+                playMusic();
+            }
+
+            // Load main menu
             MainMenu();
         }
         else if(instance != this) {
@@ -71,7 +86,7 @@ public class GameManager : MonoBehaviour {
         HARD
     }
 
-    private static int numberOfLinesPerLevel = 1;
+    private static int numberOfLinesPerLevel = 10;
 
     private static int[] numberOfLinesClearedToScore = new int[] {100, 400, 900, 2000};
 
@@ -153,10 +168,19 @@ public class GameManager : MonoBehaviour {
      * Music
      ********************************************************************************/
 
+    private static string musicPreferencesKey = "musicEnabled";
+
+    private bool playMusicOnAwake;
+
     public bool isMusicPlaying() {
         AudioSource music = GetComponent<AudioSource>();
 
         return music.isPlaying;
+    }
+
+
+    private void playMusic() {
+        GetComponent<AudioSource>().Play();
     }
 
 
@@ -166,12 +190,27 @@ public class GameManager : MonoBehaviour {
     public bool toggleMusic() {
         AudioSource music = GetComponent<AudioSource>();
 
+        // If music wasn't started initially
+        if(!playMusicOnAwake) {
+            bool hasStarted = music.time != 0;
+
+            if(!hasStarted) {
+                music.Play();
+                PlayerPrefs.SetInt(musicPreferencesKey, 1);
+                return true;
+            }
+        }
+        // Else we can assume the music was started and work on the premise of pausing and unpausing
+
+
         if (music.isPlaying) {
             music.Pause();
+            PlayerPrefs.SetInt(musicPreferencesKey, 0);
             return false;
         }
         else {
             music.UnPause();
+            PlayerPrefs.SetInt(musicPreferencesKey, 1);
             return true;
         }
     }

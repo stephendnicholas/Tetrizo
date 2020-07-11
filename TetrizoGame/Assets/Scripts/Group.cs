@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Group : MonoBehaviour {
 
@@ -10,6 +11,20 @@ public class Group : MonoBehaviour {
 
     private PlayAreaManager playAreaManager;
     private Spawner spawner;
+
+    private Text upLabel;
+    private Text rightLabel;
+    private Text downLabel;
+    private Text leftLabel;
+
+    private String[] directonLabels = new string[] {
+        "Rotate\nBlock",  // With rotationOffset 0 - this is the up arrow and direction
+        "Block\nRight",   // With rotationOffset 0 - this is the right arrow and direction
+        "Block\nDown",    // With rotationOffset 0 - this is the down arrow and direction
+        "Block\nLeft",    // With rotationOffset 0 - this is the left arrow and direction
+    };
+
+    private int rotationOffset = 0; // 0 = standard, 1 = 90 degress, 2 = 180, 3 = 270
 
     // Based on selected difficulty
     private bool relativeControls = false;
@@ -50,7 +65,14 @@ public class Group : MonoBehaviour {
             Destroy(gameObject);
             playAreaManager.GameOver();
         }
-        
+
+        // Find the direction labels on screen
+        upLabel = GameObject.FindGameObjectWithTag("upLabel").GetComponent<Text>();
+        rightLabel = GameObject.FindGameObjectWithTag("rightLabel").GetComponent<Text>();
+        downLabel = GameObject.FindGameObjectWithTag("downLabel").GetComponent<Text>();
+        leftLabel = GameObject.FindGameObjectWithTag("leftLabel").GetComponent<Text>();
+
+        updateDirectionLabels();
     }
 
     // Update is called once per frame
@@ -250,7 +272,12 @@ public class Group : MonoBehaviour {
         //TODO
         //transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
 
-        
+        //Update the direction labels if relative controls
+        if(relativeControls) {
+            increaseRotationOffset();
+            updateDirectionLabels();
+        }
+
         transform.Rotate(0, 0, -90);
 
         if (playAreaManager.isValidGridPos(this)) {
@@ -261,6 +288,24 @@ public class Group : MonoBehaviour {
         else {
             transform.Rotate(0, 0, 90);
         }
+    }
+
+
+    // Handles incremeting the rotation offset, and the cycling around 0, 1, 2, 3
+    private void increaseRotationOffset() {
+        rotationOffset++;
+
+        if(rotationOffset == 4) {
+            rotationOffset = 0;
+        }
+    }
+
+
+    private void updateDirectionLabels() {
+        upLabel.text = directonLabels[rotationOffset % 4];       // if R0, then 0, if R1, then 1, if R2, then 2, if R3, then 3
+        rightLabel.text = directonLabels[(rotationOffset + 1) % 4]; // if R0, then 1, if R1, then 2, if R2, then 3, if R3, then 0
+        downLabel.text = directonLabels[(rotationOffset + 2) % 4]; // if R0, then 2, if R1, then 3, if R2, then 0, if R3, then 1
+        leftLabel.text = directonLabels[(rotationOffset + 3) % 4]; // if R0, then 3, if R1, then 0, if R2, then 1, if R3, then 2
     }
 
 
