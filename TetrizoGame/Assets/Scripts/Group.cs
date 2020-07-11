@@ -78,6 +78,11 @@ public class Group : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+        // Ignore all if currently paused
+        if(GameManager.Instance.isPaused()) {
+            return;
+        }
+
         // Re-calculate currentPerFallInterval in case the level has increased TODO - confirm the calculation to use
         currentPerFallInterval = intitialPerFallInternal - (GameManager.Instance.getCurrentLevel() * 0.05f);
 

@@ -215,4 +215,19 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+
+    /********************************************************************************
+     * Pause state
+     ********************************************************************************/
+
+    private bool paused;
+
+    public void setPaused(bool paused) {
+        this.paused = paused;
+    }
+
+
+    public bool isPaused() {
+        return paused;
+    }
 }
