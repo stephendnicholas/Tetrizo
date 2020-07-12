@@ -17,6 +17,7 @@ public class PlayAreaManager : MonoBehaviour {
         spawner = (Spawner)FindObjectOfType<Spawner>();
     }
 
+
     public bool isValidGridPos(Group group) {
         foreach (Transform child in group.transform) {
 
@@ -30,8 +31,35 @@ public class PlayAreaManager : MonoBehaviour {
 
             Transform existingOccupant = grid[roundedX, roundedY];
 
-            // Block in grid cell (and not part of same group - needed?)?
+            // Block in grid cell (and not part of same group)
             if (existingOccupant != null && existingOccupant.parent != group.transform) { 
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    // Same as isValidGridPos, but with the y element of each block reduced by one
+    public bool isOneDownValidGridPos(Group group) {
+        foreach (Transform child in group.transform) {
+
+            int roundedX = Mathf.RoundToInt(child.transform.position.x);
+            int roundedY = Mathf.RoundToInt(child.transform.position.y);
+
+            //TODO
+            roundedY--;
+
+            // Not inside play area?
+            if (!insidePlayArea(roundedX, roundedY)) {
+                return false;
+            }
+
+            Transform existingOccupant = grid[roundedX, roundedY];
+
+            // Block in grid cell (and not part of same group)
+            if (existingOccupant != null && existingOccupant.parent != group.transform) {
                 return false;
             }
         }
@@ -76,7 +104,9 @@ public class PlayAreaManager : MonoBehaviour {
             }
         }
 
-        if (fullLineCount != 0) { 
+        if (fullLineCount != 0) {
+            GameManager.Instance.shakeScreen();
+            playLinesClearedNoise();
             GameManager.Instance.LinesCleared(fullLineCount);
         }
     }
@@ -135,4 +165,22 @@ public class PlayAreaManager : MonoBehaviour {
     public void GameOver() {
         GameManager.Instance.GameOver();
     }
+
+
+    //Set in Unity editor
+    public AudioClip landedClip;
+    public AudioClip lineClearedClip;
+
+
+    public void playLandedNoise() {
+        AudioSource levelAudio = GameObject.FindGameObjectWithTag("levelAudio").GetComponent<AudioSource>();
+        levelAudio.PlayOneShot(landedClip, 1.0f);
+    }
+
+
+    public void playLinesClearedNoise() {
+        AudioSource levelAudio = GameObject.FindGameObjectWithTag("levelAudio").GetComponent<AudioSource>();
+        levelAudio.PlayOneShot(lineClearedClip, 0.4f);
+    }
+
 }

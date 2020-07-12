@@ -14,6 +14,9 @@ public class Spawner : MonoBehaviour
     // Set in the unity editor
     public GameObject nextImage;
 
+    // Set in the unity editor
+    public AudioClip spawnClip;
+
     private float spawnDelay = 0.5f;
 
     private int nextBlock;
@@ -40,5 +43,13 @@ public class Spawner : MonoBehaviour
 
         nextImage.SetActive(true);
         nextImage.GetComponent<Image>().sprite = groupSprites[nextBlock];
+
+        playSpawnNoise();
+    }
+
+
+    private void playSpawnNoise() {
+        AudioSource spawnAudio = GameObject.FindGameObjectWithTag("spawnAudio").GetComponent<AudioSource>();
+        //spawnAudio.PlayOneShot(spawnClip);
     }
 }

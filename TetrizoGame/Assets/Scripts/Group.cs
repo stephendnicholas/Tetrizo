@@ -252,12 +252,17 @@ public class Group : MonoBehaviour {
 
         if (playAreaManager.isValidGridPos(this)) {
             Camera.main.transform.position += new Vector3(0, -1, 0);
+
+            // Next beat we will hit the terminal state, so add the screenshake now, as this is when it looks on screen like the block has impacted
+            if (!playAreaManager.isOneDownValidGridPos(this)) {
+                GameManager.Instance.shakeScreen();
+                playAreaManager.playLandedNoise();
+            }
         }
-        // We've hit our terminal down state
+        // We've hit our terminal state
         else {
             // Move back to the last valid position
             transform.position -= new Vector3(0, -1, 0);
-
             playAreaManager.bottomedOut(this);            
             enabled = false;
         }

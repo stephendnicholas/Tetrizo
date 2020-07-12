@@ -281,4 +281,34 @@ public class GameManager : MonoBehaviour {
     public bool isPaused() {
         return paused;
     }
+
+
+    /********************************************************************************
+     * Misc
+     ********************************************************************************/
+
+    public void shakeScreen() {
+        StartCoroutine(ScreenShake());
+    }
+
+
+    private IEnumerator ScreenShake() {
+
+        float distance = 0.5f;
+        float pauseBetween = 0.05f;
+
+        Camera.main.transform.position += new Vector3(distance, -distance, 0);
+
+        yield return new WaitForSeconds(pauseBetween);
+
+        Camera.main.transform.position += new Vector3(distance, distance, 0);
+
+        yield return new WaitForSeconds(pauseBetween);
+
+        Camera.main.transform.position += new Vector3(-distance, -distance, 0);
+
+        yield return new WaitForSeconds(pauseBetween);
+
+        Camera.main.transform.position += new Vector3(-distance, distance, 0);
+    }
 }
