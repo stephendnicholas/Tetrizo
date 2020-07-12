@@ -63,11 +63,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BearSpeechManager.cs" />
     <Compile Include="Assets\Scripts\BlinkingText.cs" />
+    <Compile Include="Assets\Scripts\ChooseDifficulty.cs" />
     <Compile Include="Assets\Scripts\DontDestroyOnLoad.cs" />
     <Compile Include="Assets\Scripts\Firework.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\HomeScreenManager.cs" />
+    <Compile Include="Assets\Scripts\GameOverManager.cs" />
+    <Compile Include="Assets\Scripts\Group.cs" />
+    <Compile Include="Assets\Scripts\HighScoreManager.cs" />
+    <Compile Include="Assets\Scripts\MusicButtonController.cs" />
+    <Compile Include="Assets\Scripts\PauseManager.cs" />
+    <Compile Include="Assets\Scripts\PlayAreaManager.cs" />
+    <Compile Include="Assets\Scripts\Spawner.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Code/projects/Tetrizo/TetrizoGame/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

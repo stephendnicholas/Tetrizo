@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - music
+  - musicButton
+  - levelScore
+  - levelLevel
+  - nextImage
+  - upLabel
+  - leftLabel
+  - rightLabel
+  - downLabel
   layers:
   - Default
   - TransparentFX
