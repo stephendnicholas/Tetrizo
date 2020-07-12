@@ -11,15 +11,9 @@ public class HighScoreManager : MonoBehaviour
     {
         setYourScore(GameManager.Instance.getCurrentScore());
 
-        List<int> highScores = GameManager.Instance.getHighScores();
-
-        int highScore1 = highScores[0]; // Current score should always be present, so [0] should always be safe
-        int highScore2 = highScores.Count > 1 ? highScores[1] : 0;
-        int highScore3 = highScores.Count > 2 ? highScores[2] : 0;
-
-        setHighScore1(highScore1); 
-        setHighScore2(highScore2);
-        setHighScore3(highScore3);
+        setHighScore1(GameManager.Instance.getHighScore1()); 
+        setHighScore2(GameManager.Instance.getHighScore2());
+        setHighScore3(GameManager.Instance.getHighScore3());
     }
 
 

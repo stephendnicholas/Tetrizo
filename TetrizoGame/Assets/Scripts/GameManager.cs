@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
@@ -36,6 +37,9 @@ public class GameManager : MonoBehaviour {
                 playMusic();
             }
 
+            // Load any existing high scores
+            loadHighScoresFromPrefs();
+
             // Load main menu
             MainMenu();
         }
@@ -72,6 +76,9 @@ public class GameManager : MonoBehaviour {
         highScores.Add(currentScore);
         highScores.Sort();
         highScores.Reverse();
+
+        persistHighScoresToPrefs();
+
         SceneManager.LoadScene("game_over");
     }
 
@@ -89,6 +96,10 @@ public class GameManager : MonoBehaviour {
     private static int numberOfLinesPerLevel = 10;
 
     private static int[] numberOfLinesClearedToScore = new int[] {100, 400, 900, 2000};
+
+    private static string prefs_highScore1_key = "highScore1";
+    private static string prefs_highScore2_key = "highScore2";
+    private static string prefs_highScore3_key = "highScore3";
 
 
     private Difficulty currentDifficulty = Difficulty.EASY;
@@ -161,6 +172,46 @@ public class GameManager : MonoBehaviour {
 
     public int getCurrentScore() {
         return currentScore;
+    }
+
+
+    private void persistHighScoresToPrefs() {
+        PlayerPrefs.SetInt(prefs_highScore1_key, getHighScore1());
+        PlayerPrefs.SetInt(prefs_highScore2_key, getHighScore2());
+        PlayerPrefs.SetInt(prefs_highScore3_key, getHighScore3());
+    }
+
+
+    private void loadHighScoresFromPrefs() {
+
+        if (PlayerPrefs.HasKey(prefs_highScore1_key)) {
+            highScores.Add(PlayerPrefs.GetInt(prefs_highScore1_key));
+        }
+
+        if (PlayerPrefs.HasKey(prefs_highScore2_key)) {
+            highScores.Add(PlayerPrefs.GetInt(prefs_highScore2_key));
+        }
+
+        if (PlayerPrefs.HasKey(prefs_highScore3_key)) {
+            highScores.Add(PlayerPrefs.GetInt(prefs_highScore3_key));
+        }
+
+        Debug.Log("High scores loaded: " + String.Join(", ", highScores));
+    }
+
+
+    public int getHighScore1() {
+        return  highScores.Count > 0 ? highScores[0] : 0;
+    }
+
+
+    public int getHighScore2() {
+        return highScores.Count > 1 ? highScores[1] : 0;
+    }
+
+
+    public int getHighScore3() {
+        return highScores.Count > 2 ? highScores[2] : 0;
     }
 
 

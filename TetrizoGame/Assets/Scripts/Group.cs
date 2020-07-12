@@ -274,24 +274,54 @@ public class Group : MonoBehaviour {
         }
         debug("New orientation: " + orientation);
 
-        //TODO
-        //transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
+        transform.Rotate(0, 0, -90);
 
+        if (playAreaManager.isValidGridPos(this)) {
+            validRotation();
+            return;
+        }
+
+
+        //Attempt a simple kick left
+        // Left one
+        transform.position += new Vector3(-1, 0, 0);
+
+        if (playAreaManager.isValidGridPos(this)) {
+            validRotation();
+            return;
+        }
+
+        // Back to original position
+        transform.position += new Vector3(1, 0, 0);
+
+
+        //Attempt a simple kick right
+        // Right one
+        transform.position += new Vector3(1, 0, 0);
+
+        if (playAreaManager.isValidGridPos(this)) {
+            validRotation();
+            return;
+        }
+
+
+        // Back to original position
+        transform.position += new Vector3(-1, 0, 0);
+        
+        // Undo rotation as it is not valid
+        transform.Rotate(0, 0, 90);
+    }
+
+
+    private void validRotation() {
         //Update the direction labels if relative controls
-        if(relativeControls) {
+        if (relativeControls) {
             increaseRotationOffset();
             updateDirectionLabels();
         }
 
-        transform.Rotate(0, 0, -90);
-
-        if (playAreaManager.isValidGridPos(this)) {
-            if (rotationEnabled) { 
-                Camera.main.transform.Rotate(0, 0, -90);
-            }
-        }
-        else {
-            transform.Rotate(0, 0, 90);
+        if (rotationEnabled) {
+            Camera.main.transform.Rotate(0, 0, -90);
         }
     }
 

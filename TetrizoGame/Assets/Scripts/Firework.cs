@@ -15,7 +15,6 @@ public class Firework : MonoBehaviour {
     private IEnumerator Fade() {
 
         float randoInt = Random.Range(0.0f, 5.0f);
-        Debug.Log(randoInt);
 
         yield return new WaitForSeconds(randoInt);
 
