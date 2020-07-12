@@ -173,14 +173,18 @@ public class PlayAreaManager : MonoBehaviour {
 
 
     public void playLandedNoise() {
-        AudioSource levelAudio = GameObject.FindGameObjectWithTag("levelAudio").GetComponent<AudioSource>();
-        levelAudio.PlayOneShot(landedClip, 1.0f);
+        if (GameManager.Instance.isMusicPlaying()) {
+            AudioSource levelAudio = GameObject.FindGameObjectWithTag("levelAudio").GetComponent<AudioSource>();
+            levelAudio.PlayOneShot(landedClip, 1.0f);
+        }
     }
 
 
     public void playLinesClearedNoise() {
-        AudioSource levelAudio = GameObject.FindGameObjectWithTag("levelAudio").GetComponent<AudioSource>();
-        levelAudio.PlayOneShot(lineClearedClip, 0.4f);
+        if (GameManager.Instance.isMusicPlaying()) {
+            AudioSource levelAudio = GameObject.FindGameObjectWithTag("levelAudio").GetComponent<AudioSource>();
+            levelAudio.PlayOneShot(lineClearedClip, 0.4f);
+        }
     }
 
 }

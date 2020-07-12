@@ -13,6 +13,9 @@ TagManager:
   - leftLabel
   - rightLabel
   - downLabel
+  - levelAudio
+  - spawnAudio
+  - gameOverAudio
   layers:
   - Default
   - TransparentFX

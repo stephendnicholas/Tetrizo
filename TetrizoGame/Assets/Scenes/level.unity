@@ -1360,7 +1360,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   landedClip: {fileID: 8300000, guid: f3304f8f79bc65a47b9c78d19f955217, type: 3}
   lineClearedClip: {fileID: 8300000, guid: 7e68932c79530644a90815307f4637de, type: 3}
-  gameOverClip: {fileID: 8300000, guid: 37a6bdfd0f42b9c469282ecb33f49357, type: 3}
 --- !u!114 &592181970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2124,7 +2123,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.015137, y: -580.3}
+  m_AnchoredPosition: {x: -0.015137, y: -401}
   m_SizeDelta: {x: 2422.7, y: 106.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1096632092
@@ -2805,7 +2804,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.015144, y: -351}
+  m_AnchoredPosition: {x: 3, y: -555}
   m_SizeDelta: {x: 529, y: 134.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1696546113
